@@ -1,0 +1,125 @@
+[
+    {
+      "id": 1,
+      "title": "Dashboard",
+      "url": "/"
+    },
+    {
+      "id": 2,
+      "title": "Products",
+      "subLinks": [
+        {
+          "id": 3,
+          "title": "All Products",
+          "url": "/products/all"
+        },
+        {
+          "id": 4,
+          "title": "Add New",
+          "url": "/products/add"
+        },
+        {
+          "id": 5,
+          "title": "My Added Product",
+          "url": "/products/categories"
+        },
+        {
+          "id": 6,
+          "title": "Featured Products",
+          "url": "/products/featured"
+        },
+        {
+          "id": 7,
+          "title": "Best Sellers",
+          "url": "/products/best-sellers"
+        },
+        {
+          "id": 8,
+          "title": "Discounted Items",
+          "url": "/products/discounted"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Users",
+      "subLinks": [
+        {
+          "id": 10,
+          "title": "All Users",
+          "url": "/users/all"
+        },
+        {
+          "id": 11,
+          "title": "Add New User",
+          "url": "/users/add"
+        },
+        {
+          "id": 12,
+          "title": "User Roles",
+          "url": "/users/roles"
+        },
+        {
+          "id": 13,
+          "title": "User Activity",
+          "url": "/users/activity"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Orders",
+      "url": "/orders"
+    },
+    {
+      "id": 15,
+      "title": "Settings",
+      "url": "/settings"
+    },
+    {
+      "id": 16,
+      "title": "Analytics",
+      "url": "/analytics"
+    },
+    {
+      "id": 17,
+      "title": "Notifications",
+      "url": "/notifications"
+    },
+    {
+      "id": 18,
+      "title": "Help",
+      "url": "/help"
+    },
+    {
+      "id": 19,
+      "title": "Log Out",
+      "url": "/logout"
+    },
+    {
+      "id": 20,
+      "title": "Reports",
+      "url": "/reports"
+    },
+    {
+      "id": 21,
+      "title": "Reviews",
+      "url": "/reviews"
+    },
+    {
+      "id": 22,
+      "title": "Invoices",
+      "url": "/invoices"
+    },
+    {
+      "id": 23,
+      "title": "Subscriptions",
+      "url": "/subscriptions"
+    },
+    {
+      "id": 24,
+      "title": "Support",
+      "url": "/support"
+    }
+  ]
+  
