@@ -3,29 +3,38 @@ import logo from "../../assets/logo.png";
 import profileImg from "../../assets/user-man.png";
 import sadeBarLinks from "../../../public/links.json";
 import { NavLink } from "react-router-dom";
-import { Accordion, AccordionBody, AccordionHeader, Chip, List, ListItem, ListItemPrefix, ListItemSuffix, Typography } from "@material-tailwind/react";
-import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { Accordion, AccordionBody, AccordionHeader, List, ListItem, Typography } from "@material-tailwind/react";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { useContext, useState } from "react";
+import { FuncContext } from "../../provider/FuncProvider";
+import { MdOutlineKeyboardDoubleArrowLeft } from "react-icons/md";
 
 const Sidebar = () => {
   const [open, setOpen] = useState(0);
+
+  const {hideBar, setHideBar } = useContext(FuncContext);
 
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
   return (
-    <aside className="w-80 h-screen">
-      <figure className="w-52 py-6  px-6">
-        <LazyLoadImage className="max-w-full" src={logo} alt="xentro-logo" />
-      </figure>
+    <aside className={`${hideBar ? 'w-0 ' : 'w-80'} duration-200 overflow-hidden text-nowrap h-screen shadow`}>
+      <div className="py-4  px-6 flex justify-between items-center">
+        <figure className="w-44 ">
+          <img className="max-w-full" src={logo} alt="xentro-logo" />
+        </figure>
+        <button className="text-neutral-500 border rounded-md p-1 border-neutral-300 cursor-pointer active:bg-neutral-200 duration-100 active:scale-95" onClick={() => setHideBar(true)}>
+          <MdOutlineKeyboardDoubleArrowLeft size={24} />
+        </button>
+      </div>
       <div className="overflow-auto h-full sidebar-scroll  px-6">
-        <div className="flex items-center p-3 bg-white rounded-md gap-4">
+        <div className="flex items-center p-3 bg-bgGray rounded-xl gap-4">
           <figure className="size-10 rounded-full overflow-hidden ring-1 ring-orange-200">
-            <LazyLoadImage className="object-cover w-full" src={profileImg} alt="profile" />
+            <img className="object-cover w-full" src={profileImg} alt="profile" />
           </figure>
           <div className="flex flex-col">
             <span className="font-semibold text-orange-500">Hasanul Banna Mubin</span>
-            <span className="text-sm text-neutral-600">Admin</span>
+            <span className="text-sm text-neutral-500">Admin</span>
           </div>
         </div>
         <nav>
@@ -33,18 +42,18 @@ const Sidebar = () => {
             {sadeBarLinks.map((link, idx) =>
               link.subLinks ? (
                 <Accordion key={link.id} open={open === idx} icon={<ChevronDownIcon strokeWidth={2.5} className={`mx-auto h-4 w-4 transition-transform ${open === idx ? "rotate-180" : ""}`} />}>
-                  <ListItem className="p-0" selected={open === idx}>
+                  <ListItem className="p-0 " selected={open === idx}>
                     <AccordionHeader onClick={() => handleOpen(idx)} className="border-b-0 p-3">
-                      <Typography className="mr-auto font-normal">
-                        {link.title}
-                      </Typography>
+                      <Typography className="mr-auto font-normal">{link.title}</Typography>
                     </AccordionHeader>
                   </ListItem>
                   <AccordionBody className="py-1">
                     <List className="pl-3">
                       {link.subLinks.map((subLink, idx) => (
                         <ListItem className="p-0  rounded-md overflow-hidden" key={subLink.id}>
-                          <NavLink className="inline-block w-full h-full p-3" to={subLink.url}>{subLink.title}</NavLink>
+                          <NavLink className="inline-block w-full h-full p-3" to={subLink.url}>
+                            {subLink.title}
+                          </NavLink>
                         </ListItem>
                       ))}
                     </List>
@@ -52,7 +61,9 @@ const Sidebar = () => {
                 </Accordion>
               ) : (
                 <ListItem className="p-0" key={link.id}>
-                  <NavLink className="inline-block w-full h-full p-3" to={link.url}>{link.title}</NavLink>
+                  <NavLink className="inline-block w-full h-full p-3" to={link.url}>
+                    {link.title}
+                  </NavLink>
                 </ListItem>
               )
             )}

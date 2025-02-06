@@ -4,6 +4,8 @@ import Error from "./pages/Error";
 import Dashboard from "./components/dashboard/Dashboard";
 import ProductList from "./components/productList/ProductList";
 import Users from "./components/Users/Users";
+import UserDetails from "./components/userDetails/UserDetails";
+
 
 export const router = createBrowserRouter([
     {
@@ -20,8 +22,13 @@ export const router = createBrowserRouter([
                 element: <ProductList />
             },
             {
-                path:'/users',
+                path:'/users/all',
                 element: <Users />
+            },
+            {
+                path:'/users/:id',
+                element: <UserDetails />,
+                loader: ({params})=>fetch(`https://jsonplaceholder.typicode.com/users/${params.id}`)
             },
         ]
     }
