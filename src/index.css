@@ -17,11 +17,20 @@
   }
   
   .sidebar-scroll::-webkit-scrollbar-thumb {
-    @apply bg-orange-100 dark:bg-blue-500 rounded-md overflow-hidden
+    background-color: #ffedd5;
+    border-radius: 4px;
   }
   
+  .dark .sidebar-scroll::-webkit-scrollbar-thumb {
+    @apply bg-slate-700
+  }
+  
+  
   .sidebar-scroll::-webkit-scrollbar-thumb:hover {
-@apply bg-orange-200 dark:bg-blue-500
+@apply bg-orange-200
+  }
+  .dark .sidebar-scroll::-webkit-scrollbar-thumb:hover {
+@apply bg-slate-500
   }
 
   .sidebar-scroll .active{
