@@ -2,34 +2,45 @@ import { useState } from "react";
 import useProductList from "../../hooks/useProductList";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { BarLoader } from "react-spinners";
+import { productList } from "../../../public/data";
 
 const ProductList = () => {
-  const { productList, productListLoading, productListError } = useProductList();
+  const {  productListLoading, productListError } = useProductList();
   const [search, setSearch] = useState("");
-  const [sortOrder, setSortOrder] = useState("asc");
+  const [sortOrder, setSortOrder] = useState("default");
 
   const filteredProducts = productList.filter((product) => product.name.toLowerCase().includes(search.toLowerCase()));
-  const sortedProducts = [...filteredProducts].sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
+
+  const sortedProducts = [...filteredProducts].sort((a, b) => {
+    const priceA = a.data?.price || a.data?.Price || Infinity;
+    const priceB = b.data?.price || b.data?.Price || Infinity;
+
+    if (sortOrder === "low") return priceA - priceB;
+    if (sortOrder === "high") return priceB - priceA;
+    return 0;
+  });
+
   return (
-    <div className=" bg-white p-3 rounded-md ">
-      <div className="flex justify-between items-center pr-3">
-        <h1 className="text-2xl font-semibold pl-4">All Products</h1>
-        <div className="flex items-center gap-6">
-          <div className="inline-flex items-center bg-white pl-5 py-1 rounded-xl border border-neutral-200">
-            <input onChange={(e) => setSearch(e.target.value)} className=" w-96 py-1 outline-none bg-white" type="text" placeholder="Search user" />
-            <span className="px-3 text-neutral-500 cursor-pointer">
+    <div className=" bg-white dark:bg-slate-800 p-3 rounded-md text-nowrap">
+      <div className="flex sm:flex-row flex-col justify-between sm:items-center  sm:pr-3 ">
+        <h1 className="text-2xl font-semibold sm:pl-4 dark:text-neutral-200">All Products</h1>
+        <div className="flex sm:flex-row flex-col sm:items-center gap-6 sm:mt-0 mt-3">
+          <div className="inline-flex items-center justify-between bg-white dark:bg-slate-800 pl-5 py-1 rounded-xl border border-neutral-200 dark:border-slate-700">
+            <input onChange={(e) => setSearch(e.target.value)} className=" xl:w-96 py-1 outline-none bg-white dark:bg-slate-800 dark:placeholder:text-neutral-500 dark:text-neutral-300" type="text" placeholder="Search user" />
+            <span className="px-3 text-neutral-500">
               <HiMiniMagnifyingGlass size={20} />
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="text-sm text-neutral-500">Sort by ID</div>
+            <div className="text-sm text-neutral-500">Sort by price</div>
             <div className="relative">
               <select
                 onChange={(e) => setSortOrder(e.target.value)}
-                className="w-full focus:bg-bgGray bg-transparent placeholder:text-neutral-500 text-slate-700 text-sm border border-neutral-200 rounded-md pl-3 pr-8 py-2 transition duration-200 ease focus:outline-none  appearance-none cursor-pointer"
+                className="w-full focus:bg-bgGray bg-transparent placeholder:text-neutral-500 text-slate-700 dark:text-neutral-500 text-sm border border-neutral-200 rounded-md pl-3 pr-8 py-2 transition duration-200 ease focus:outline-none  appearance-none cursor-pointer dark:border-neutral-500 dark:focus:bg-slate-800 font-semibold"
               >
-                <option value="asc">Ascending</option>
-                <option value="des">Descending</option>
+                <option value="default">default</option>
+                <option value="low">low to high</option>
+                <option value="high">high to low</option>
               </select>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.2" stroke="currentColor" className="h-5 w-5 ml-1 absolute top-2 right-2.5 text-slate-700">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 15 12 18.75 15.75 15m-7.5-6L12 5.25 15.75 9" />
@@ -38,10 +49,10 @@ const ProductList = () => {
           </div>
         </div>
       </div>
-      <div className="m-3 ">
-        <table className="w-full product-table rounded-md overflow-hidden">
+      <div className="sm:my-3 sm:mx-3 my-3  overflow-auto">
+        <table className="w-full product-table rounded-md ">
           <thead>
-            <tr>
+            <tr className="font-normal text-neutral-500 uppercase text-xs bg-[#e6e4f1] dark:bg-gray-600 dark:text-slate-300">
               <th>
                 <p>id</p>
               </th>
@@ -54,12 +65,15 @@ const ProductList = () => {
               <th>
                 <p>Others</p>
               </th>
+              <th>
+                <p></p>
+              </th>
             </tr>
           </thead>
           <tbody>
             {sortedProducts.length > 0
               ? sortedProducts.map((product) => (
-                  <tr key={product.id}>
+                  <tr className="hover:bg-[#fbfaff] duration-200 even:bg-bgGray even:dark:bg-gray-700 even:hover:bg-[#ece6f9] even:duration-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:even:hover:bg-slate-700" key={product.id}>
                     <td>
                       <p>{product.id}</p>
                     </td>
@@ -70,15 +84,17 @@ const ProductList = () => {
                       <p>{product.data?.price || product.data?.Price || "N/A"}</p>
                     </td>
                     <td>
-                      <p>
-                        {product.data?.color || product.data?.Color ? `Color: ${product.data?.color || product.data?.Color}, ` : ""}
-
-                        {product.data?.capacity || product?.data?.Capacity || product.data?.["capacity GB"]
-                          ? `Capacity: ${product.data?.capacity || product.data?.Capacity || (product?.data?.["capacity GB"] ? `${product.data?.["capacity GB"]} GB` : "")}, `
-                          : ""}
-                          {product?.data?.["Strap Colour"] && `Strap color: ${product?.data?.["Strap Colour"]}, ` }
-                          {product?.data?.["Case Size"] && `Case Size: ${product?.data?.["Case Size"]}` }
-                      </p>
+                      {product?.data &&
+                        Object.entries(product.data)
+                          .filter(([key]) => key.toLocaleLowerCase() !== "price")
+                          .map(([key, value]) => (
+                            <p key={key}>
+                              <span className="capitalize text-neutral-700 dark:text-neutral-300">{key}</span>: <span>{value}</span>
+                            </p>
+                          ))}
+                    </td>
+                    <td>
+                      <a href={`/products/${product.id}`} className="bg-indigo-500  text-white inline-block px-3 hover:shadow-xl active:scale-95 duration-200 py-1.5 rounded-2xl sm:text-sm text-xs cursor-pointer">View details</a>
                     </td>
                   </tr>
                 ))

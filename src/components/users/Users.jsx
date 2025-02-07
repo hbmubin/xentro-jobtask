@@ -11,13 +11,13 @@ const Users = () => {
   const filteredUsers = users.filter((user) => user.name.toLowerCase().includes(search.toLowerCase()));
   const sortedUsers = [...filteredUsers].sort((a, b) => (sortOrder === "asc" ? a.id - b.id : b.id - a.id));
   return (
-    <div className=" bg-white p-3 rounded-md">
-      <div className="flex justify-between items-center pr-3">
-        <h1 className="text-2xl font-semibold pl-4">All Users</h1>
-        <div className="flex items-center gap-6">
-          <div className="inline-flex items-center bg-white pl-5 py-1 rounded-xl border border-neutral-200">
-            <input onChange={(e) => setSearch(e.target.value)} className=" w-96 py-1 outline-none bg-white" type="text" placeholder="Search user" />
-            <span className="px-3 text-neutral-500 cursor-pointer">
+    <div className=" bg-white dark:bg-slate-800 p-3 rounded-md text-nowrap">
+      <div className="flex sm:flex-row flex-col justify-between sm:items-center  sm:pr-3 ">
+        <h1 className="text-2xl font-semibold sm:pl-4 dark:text-neutral-200">All Users</h1>
+        <div className="flex sm:flex-row flex-col sm:items-center gap-6 sm:mt-0 mt-3">
+          <div className="inline-flex items-center justify-between bg-white dark:bg-slate-800 pl-5 py-1 rounded-xl border border-neutral-200 dark:border-slate-700">
+            <input onChange={(e) => setSearch(e.target.value)} className="xl:w-96 py-1 outline-none bg-white dark:bg-slate-800 dark:placeholder:text-neutral-500 dark:text-neutral-300" type="text" placeholder="Search user" />
+            <span className="px-3 text-neutral-500">
               <HiMiniMagnifyingGlass size={20} />
             </span>
           </div>
@@ -26,7 +26,7 @@ const Users = () => {
             <div className="relative">
               <select
                 onChange={(e) => setSortOrder(e.target.value)}
-                className="w-full focus:bg-bgGray bg-transparent placeholder:text-neutral-500 text-slate-700 text-sm border border-neutral-200 rounded-md pl-3 pr-8 py-2 transition duration-200 ease focus:outline-none  appearance-none cursor-pointer"
+                className="w-full focus:bg-bgGray bg-transparent placeholder:text-neutral-500 text-slate-700 dark:text-neutral-500 text-sm border border-neutral-200 rounded-md pl-3 pr-8 py-2 transition duration-200 ease focus:outline-none  appearance-none cursor-pointer dark:border-neutral-500 dark:focus:bg-slate-800 font-semibold"
               >
                 <option value="asc">Ascending</option>
                 <option value="des">Descending</option>
@@ -38,10 +38,10 @@ const Users = () => {
           </div>
         </div>
       </div>
-      <div className="m-3 ">
-        <table className="w-full user-table rounded-md overflow-hidden">
+      <div className="sm:my-3 sm:mx-3 my-3  overflow-auto">
+        <table className="w-full user-table rounded-md">
           <thead>
-            <tr>
+            <tr className="font-normal text-neutral-500 uppercase text-xs bg-[#e6e4f1] dark:bg-gray-600 dark:text-slate-300">
               <th>
                 <p>User id</p>
               </th>
@@ -62,7 +62,7 @@ const Users = () => {
           <tbody>
             {sortedUsers.length > 0
               ? sortedUsers.map((user) => (
-                  <tr key={user.id}>
+                  <tr className="hover:bg-[#fbfaff] duration-200 even:bg-bgGray even:dark:bg-gray-700 even:hover:bg-[#ece6f9] even:duration-200 dark:text-slate-300 dark:hover:bg-slate-700 dark:even:hover:bg-slate-700" key={user.id}>
                     <td>
                       <p>{user.id}</p>
                     </td>
