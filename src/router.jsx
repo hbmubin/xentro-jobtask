@@ -7,6 +7,8 @@ import Users from "./components/Users/Users";
 import UserDetails from "./components/userDetails/UserDetails";
 import AddProduct from "./components/addProduct/AddProduct";
 import ProductDetails from "./components/productDetails/ProductDetails";
+import Register from "./pages/register";
+import Login from "./pages/Login";
 
 
 export const router = createBrowserRouter([
@@ -42,5 +44,13 @@ export const router = createBrowserRouter([
                 loader: ({params})=>fetch(`https://api.restful-api.dev/objects/${params.id}`)
             },
         ]
+    },
+    {
+        path:'/register',
+        element: <Register />
+    },
+    {
+        path:'/login',
+        element: <Login />
     }
 ])

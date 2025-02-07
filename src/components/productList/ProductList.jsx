@@ -2,10 +2,10 @@ import { useState } from "react";
 import useProductList from "../../hooks/useProductList";
 import { HiMiniMagnifyingGlass } from "react-icons/hi2";
 import { BarLoader } from "react-spinners";
-import { productList } from "../../../public/data";
+// import { productList } from "../../../public/data";
 
 const ProductList = () => {
-  const {  productListLoading, productListError } = useProductList();
+  const {  productList, productListLoading, productListError } = useProductList();
   const [search, setSearch] = useState("");
   const [sortOrder, setSortOrder] = useState("default");
 

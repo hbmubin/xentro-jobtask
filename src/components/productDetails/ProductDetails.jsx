@@ -4,10 +4,10 @@ import useAxiosPublic from "../../hooks/useAxiosPublic";
 import { useState } from "react";
 import { Spinner } from "@material-tailwind/react";
 import { toast, ToastContainer } from "react-toastify";
-import { product } from "../../../public/product"
+// import { product } from "../../../public/product"
 
 const ProductDetails = () => {
-  // const product = useLoaderData();
+  const product = useLoaderData();
   const axiosPublic = useAxiosPublic()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const navigate = useNavigate()
